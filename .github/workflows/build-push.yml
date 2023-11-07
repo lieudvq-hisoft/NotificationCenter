@@ -21,8 +21,6 @@ jobs:
           registry: https://harbor.hisoft.vn
           username: ${{ secrets.HARBOR_USERNAME }}
           password: ${{ secrets.HARBOR_TOKEN }}
-          # username: ${{ secrets.SOLOCODE_USERNAME }}
-          # password: ${{ secrets.SOLOCODE_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
