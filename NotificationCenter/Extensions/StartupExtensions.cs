@@ -126,7 +126,7 @@ namespace NotificationCenter.Extensions
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Notification center for WMS",
-                    Version = "1.0",
+                    Version = "1.1",
                     Description = "Notification center for WMS",
                 });
                 c.UseInlineDefinitionsForEnums();
