@@ -106,7 +106,7 @@ namespace NotificationCenter.Extensions
                         },
                         OnMessageReceived = context =>
                         {
-                            var accessToken = context.Request.Query["access_token"];
+                            var accessToken = context.Request.Query["accessToken"];
 
                             // If the request is for our hub...
                             var path = context.HttpContext.Request.Path;
