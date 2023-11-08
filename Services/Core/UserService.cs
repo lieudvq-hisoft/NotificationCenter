@@ -49,11 +49,10 @@ namespace Services.Core
                 var user = _dbContext.Users.Find(_ => _.Id == model.Id).FirstOrDefault();
                 if (user == null)
                 {
-                    user = _mapper.Map<UserFromKafka, User>(model);
-                    await _dbContext.Users.InsertOneAsync(user);
+                    await _dbContext.Users.InsertOneAsync(_mapper.Map<UserFromKafka, User>(model));
                 }else
                 {
-                    _dbContext.Users.FindOneAndReplace(_ => _.Id == user.Id, user);
+                    _dbContext.Users.FindOneAndReplace(_ => _.Id == user.Id, _mapper.Map<UserFromKafka, User>(model));
                 }
                 result.Succeed = true;
             }
