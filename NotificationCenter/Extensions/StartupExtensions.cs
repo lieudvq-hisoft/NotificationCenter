@@ -41,7 +41,7 @@ namespace NotificationCenter.Extensions
             {
                 ConsumerConfig config = new ConsumerConfig
                 {
-                    BootstrapServers = "192.168.40.83:9092",
+                    BootstrapServers = "192.168.40.81:9092",
                     GroupId = new Guid().ToString(),
                 };
                 return config;
