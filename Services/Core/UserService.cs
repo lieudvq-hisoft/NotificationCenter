@@ -9,41 +9,36 @@ namespace Services.Core
 {
     public interface IUserService
     {
-        Task<ResultModel> AddFromKafka(UserFromKafka model);
-        Task<ResultModel> UpdateFromKafka(UserFromKafka model);
+        Task AddFromKafka(UserFromKafka model);
+        Task UpdateFromKafka(UserFromKafka model);
         Task<ResultModel> Get();
     }
     public class UserService : IUserService
 	{
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
-        public UserService(AppDbContext dbContext, IMapper mapper)
+        private readonly INotificationService _notificationService;
+        public UserService(AppDbContext dbContext, IMapper mapper, INotificationService notificationService)
 		{
             _dbContext = dbContext;
             _mapper = mapper;
+            _notificationService = notificationService;
 		}
 
-        public async Task<ResultModel> AddFromKafka(UserFromKafka model)
+        public async Task AddFromKafka(UserFromKafka model)
         {
-            var result = new ResultModel();
-            result.Succeed = false;
             try
             {
                 var user = _mapper.Map<UserFromKafka, User>(model);
                 await _dbContext.Users.InsertOneAsync(user);
-                result.Succeed = true;
             }
             catch (Exception e)
             {
-                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
             }
-            return result;
         }
 
-        public async Task<ResultModel> UpdateFromKafka(UserFromKafka model)
+        public async Task UpdateFromKafka(UserFromKafka model)
         {
-            var result = new ResultModel();
-            result.Succeed = false;
             try
             {
                 var user = _dbContext.Users.Find(_ => _.Id == model.Id).FirstOrDefault();
@@ -54,13 +49,19 @@ namespace Services.Core
                 {
                     _dbContext.Users.FindOneAndReplace(_ => _.Id == user.Id, _mapper.Map<UserFromKafka, User>(model));
                 }
-                result.Succeed = true;
+                var userResult = _dbContext.Users.Find(_ => _.Id == model.Id).FirstOrDefault();
+                var notification = new Notification
+                {
+                    Title = "",
+                    Body = "",
+                    Data = Newtonsoft.Json.JsonConvert.SerializeObject(userResult),
+                    UserId = userResult.Id
+                };
+                await _notificationService.Add(notification);
             }
             catch (Exception e)
             {
-                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
             }
-            return result;
         }
 
         public async Task<ResultModel> Get()

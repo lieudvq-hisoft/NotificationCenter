@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Data.Entities;
 using Data.Models;
 
@@ -9,7 +8,7 @@ namespace Data.Mapping
     {
 		public MapperProfile()
 		{
-            CreateMap<Notification, NotificationCreateModel>().ReverseMap();
+            CreateMap<Notification, NotificationModel>().ReverseMap();
 
             CreateMap<User, UserModel>().ReverseMap();
             CreateMap<UserFromKafka, User>().ReverseMap();

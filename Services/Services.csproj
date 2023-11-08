@@ -15,6 +15,7 @@
     <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +29,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="kafka\" />
     <None Remove="Core\" />
+    <None Remove="SignalR\" />
+    <None Remove="ClaimExtensions\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="kafka\" />
     <Folder Include="Core\" />
+    <Folder Include="SignalR\" />
+    <Folder Include="ClaimExtensions\" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace Data.Entities
 {
@@ -10,6 +11,11 @@ namespace Data.Entities
         public bool IsDeleted { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateUpdated { get; set; } = DateTime.Now;
+    }
+
+    public class CustomObjectSerializer : SerializerBase<object>
+    {
+        // serialize object
     }
 }
 

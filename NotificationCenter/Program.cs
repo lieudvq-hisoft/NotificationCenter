@@ -1,5 +1,6 @@
 ﻿using Data.DataAccess;
 using NotificationCenter.Extensions;
+using Services.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,16 @@ builder.Services.ConfigureSwagger();
 builder.Services.AddJWTAuthentication(builder.Configuration["Jwt:Key"], builder.Configuration["Jwt:Issuer"]);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
+{
+    builder
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+        .WithOrigins("http://localhost:3000", "https://wms.hisoft.vn"
+        );
+}));
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -29,7 +40,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("CorsPolicy");
+
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+
+    endpoints.MapHub<NotificationHub>("/notificationHub");
+});
 
 app.MapControllers();
 

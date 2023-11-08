@@ -11,6 +11,7 @@ using MongoDB.Driver;
 using Newtonsoft.Json.Converters;
 using Services.Core;
 using Services.kafka;
+using Services.SignalR;
 
 namespace NotificationCenter.Extensions
 {
@@ -34,7 +35,8 @@ namespace NotificationCenter.Extensions
 
         public static void AddBussinessService(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<INotificationService, NotificationService>();
+            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddSingleton<INotificationHub, NotificationHub>();
             services.AddSingleton<IUserService, UserService>();
             services.AddHostedService<KafkaConsumer>();
             services.AddSingleton<ConsumerConfig>(option =>
