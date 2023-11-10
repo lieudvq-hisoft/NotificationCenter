@@ -97,13 +97,13 @@ namespace Services.Core
                     result.ErrorMessage = "User not found";
                     return result;
                 }
-                if (!user.FcmTokens.Contains(model.Fcmtoken))
+                if (!user.FcmTokens.Contains(model.FcmToken))
                 {
-                    user.FcmTokens.Add(model.Fcmtoken);
+                    user.FcmTokens.Add(model.FcmToken);
                     user.DateUpdated = DateTime.Now;
                     _dbContext.Users.ReplaceOne(_ => _.Id == user.Id, user);
                 }
-                result.Data = model.Fcmtoken;
+                result.Data = model.FcmToken;
                 result.Succeed = true;
             }
             catch (Exception e)

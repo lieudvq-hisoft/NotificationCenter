@@ -20,7 +20,7 @@ namespace Data.Models
 
     public class BindFcmtokenModel
     {
-        public string Fcmtoken { get; set; }
+        public string FcmToken { get; set; }
     }
 
     public class DeleteFcmtokenModel
