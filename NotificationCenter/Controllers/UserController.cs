@@ -26,6 +26,14 @@ public class UserController : ControllerBase
         return BadRequest(rs.ErrorMessage);
     }
 
+    [HttpGet("Profile")]
+    public async Task<ActionResult> GetProfile()
+    {
+        var rs = await _userService.Profile(Guid.Parse(User.GetId()));
+        if (rs.Succeed) return Ok(rs.Data);
+        return BadRequest(rs.ErrorMessage);
+    }
+
     [HttpPost("FcmToken")]
     [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> BindFcmToken([FromBody] BindFcmtokenModel model)

@@ -13,6 +13,7 @@ namespace Services.Core
         Task UpdateFromKafka(UserFromKafka model);
         Task<ResultModel> BindFcmtoken(BindFcmtokenModel model, Guid userId);
         Task<ResultModel> DeleteFcmToken(string fcmToken, Guid userId);
+        Task<ResultModel> Profile(Guid userId);
         Task<ResultModel> Get();
     }
     public class UserService : IUserService
@@ -104,6 +105,28 @@ namespace Services.Core
                     _dbContext.Users.ReplaceOne(_ => _.Id == user.Id, user);
                 }
                 result.Data = model.FcmToken;
+                result.Succeed = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+            return result;
+        }
+
+        public async Task<ResultModel> Profile(Guid userId)
+        {
+            var result = new ResultModel();
+            try
+            {
+                var user = _dbContext.Users.Find(_ => _.Id == userId && !_.IsDeleted).FirstOrDefault();
+                if (user == null)
+                {
+                    result.Succeed = false;
+                    result.ErrorMessage = "User not found";
+                    return result;
+                }
+                result.Data = _mapper.Map<User, UserModel>(user);
                 result.Succeed = true;
             }
             catch (Exception e)
