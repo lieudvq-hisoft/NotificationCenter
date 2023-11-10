@@ -25,8 +25,7 @@ namespace Data.Models
 
     public class DeleteFcmtokenModel
     {
-        public string Fcmtoken { get; set; }
-        public string UserId { get; set; }
+        public string FcmToken { get; set; }
     }
 }
 
