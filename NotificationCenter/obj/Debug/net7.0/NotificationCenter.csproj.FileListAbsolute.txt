@@ -88,3 +88,5 @@
 /Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/bin/Debug/net7.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/bin/Debug/net7.0/Microsoft.IdentityModel.Tokens.dll
 /Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/bin/Debug/net7.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/bin/Debug/net7.0/CorePush.dll
+/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/bin/Debug/net7.0/BouncyCastle.Crypto.dll

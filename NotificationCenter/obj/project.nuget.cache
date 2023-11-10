@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "HVttXvuvqcXCjT1QpINCGccFtovc2ORrWFlB9FmV3f6MerT1F0pOm7w3HmDKcizn74AeX6nY1kBGNB0dRP4uMw==",
+  "dgSpecHash": "rY7p1wMU5t098za+Pi9coXJTUM7SYL82/eRu9dAXNcOof/gDMLvZu+WtKERTbMvemuS5U5zodyMdkD5uMURPDQ==",
   "success": true,
   "projectFilePath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/NotificationCenter.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "/Users/dangvoquanglieu/.nuget/packages/awssdk.core/3.7.100.14/awssdk.core.3.7.100.14.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/awssdk.securitytoken/3.7.100.14/awssdk.securitytoken.3.7.100.14.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/confluent.kafka/2.3.0/confluent.kafka.2.3.0.nupkg.sha512",
+    "/Users/dangvoquanglieu/.nuget/packages/corepush/3.1.1/corepush.3.1.1.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/librdkafka.redist/2.3.0/librdkafka.redist.2.3.0.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.13/microsoft.aspnetcore.authentication.jwtbearer.7.0.13.nupkg.sha512",
@@ -42,6 +43,7 @@
     "/Users/dangvoquanglieu/.nuget/packages/mongodb.libmongocrypt/1.8.0/mongodb.libmongocrypt.1.8.0.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512",
+    "/Users/dangvoquanglieu/.nuget/packages/portable.bouncycastle/1.9.0/portable.bouncycastle.1.9.0.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/sharpcompress/0.30.1/sharpcompress.0.30.1.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/snappier/1.0.0/snappier.1.0.0.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",

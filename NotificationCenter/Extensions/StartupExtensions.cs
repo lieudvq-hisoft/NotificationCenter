@@ -2,8 +2,11 @@
 using System.Text.Json;
 using AutoMapper;
 using Confluent.Kafka;
+using CorePush.Apple;
+using CorePush.Google;
 using Data.DataAccess;
 using Data.Mapping;
+using Data.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -48,6 +51,12 @@ namespace NotificationCenter.Extensions
                 };
                 return config;
             });
+
+            services.AddSingleton<IFireBaseNotificationService, FireBaseNotificationService>();
+            services.AddHttpClient<FcmSender>();
+            services.AddHttpClient<ApnSender>();
+            var appSettingsSection = configuration.GetSection("FcmNotification");
+            services.Configure<FcmNotificationSetting>(appSettingsSection);
         }
 
         public static void AddJWTAuthentication(this IServiceCollection services, string key, string issuer)
