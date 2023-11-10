@@ -17,5 +17,16 @@ namespace Data.Models
         public int CurrenNoticeCount { get; set; }
         public List<string> FcmTokens { get; set; }
     }
+
+    public class BindFcmtokenModel
+    {
+        public string Fcmtoken { get; set; }
+    }
+
+    public class DeleteFcmtokenModel
+    {
+        public string Fcmtoken { get; set; }
+        public string UserId { get; set; }
+    }
 }
 

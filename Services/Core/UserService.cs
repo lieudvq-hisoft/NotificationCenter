@@ -11,6 +11,8 @@ namespace Services.Core
     {
         Task AddFromKafka(UserFromKafka model);
         Task UpdateFromKafka(UserFromKafka model);
+        Task<ResultModel> BindFcmtoken(BindFcmtokenModel model, Guid userId);
+        Task<ResultModel> DeleteFcmToken(string fcmToken, Guid userId);
         Task<ResultModel> Get();
     }
     public class UserService : IUserService
@@ -75,6 +77,59 @@ namespace Services.Core
                      .OrderByDescending(_n => _n.DateCreated).ToList();
                 result.Succeed = true;
                 result.Data = _mapper.Map<List<User>, List<UserModel>>(users);
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+            return result;
+        }
+
+        public async Task<ResultModel> BindFcmtoken(BindFcmtokenModel model, Guid userId)
+        {
+            var result = new ResultModel();
+            try
+            {
+                var user = _dbContext.Users.Find(_ => _.Id == userId && !_.IsDeleted).FirstOrDefault();
+                if(user == null)
+                {
+                    result.Succeed = false;
+                    result.ErrorMessage = "User not found";
+                    return result;
+                }
+                if (!user.FcmTokens.Contains(model.Fcmtoken))
+                {
+                    user.FcmTokens.Add(model.Fcmtoken);
+                    user.DateUpdated = DateTime.Now;
+                    _dbContext.Users.ReplaceOne(_ => _.Id == user.Id, user);
+                }
+                result.Data = model.Fcmtoken;
+                result.Succeed = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+            return result;
+        }
+
+        public async Task<ResultModel> DeleteFcmToken(string fcmToken, Guid userId)
+        {
+            var result = new ResultModel();
+            try
+            {
+                var user = _dbContext.Users.Find(_ => _.Id == userId && !_.IsDeleted).FirstOrDefault();
+                if (user != null && user.FcmTokens.Contains(fcmToken))
+                {
+                    user.FcmTokens.Remove(fcmToken);
+                    _dbContext.Users.ReplaceOne(_ => _.Id == user.Id, user);
+                    result.Data = "Delete successful!";
+                }
+                if (result.Data == null)
+                {
+                    result.Data = "Delete failed!";
+                }
+                result.Succeed = true;
             }
             catch (Exception e)
             {

@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.ClaimExtensions;
 using Services.Core;
 
 namespace NotificationCenter;
@@ -21,6 +22,23 @@ public class UserController : ControllerBase
     public async Task<ActionResult> Get()
     {
         var rs = await _userService.Get();
+        if (rs.Succeed) return Ok(rs.Data);
+        return BadRequest(rs.ErrorMessage);
+    }
+
+    [HttpPost("FcmToken")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public async Task<IActionResult> BindFcmToken([FromBody] BindFcmtokenModel model)
+    {
+        var rs = await _userService.BindFcmtoken(model, Guid.Parse(User.GetId()));
+        if (rs.Succeed) return Ok(rs.Data);
+        return BadRequest(rs.ErrorMessage);
+    }
+
+    [HttpDelete("FcmToken")]
+    public async Task<IActionResult> DeleteFcmToken([FromBody] DeleteFcmtokenModel model)
+    {
+        var rs = await _userService.DeleteFcmToken(model.Fcmtoken, Guid.Parse(model.UserId));
         if (rs.Succeed) return Ok(rs.Data);
         return BadRequest(rs.ErrorMessage);
     }
