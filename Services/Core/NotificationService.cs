@@ -10,6 +10,7 @@ namespace Services.Core
     public interface INotificationService
     {
         Task Add(Notification model);
+        Task CreateReceipt(KafkaModel model);
         Task<ResultModel> Get(Guid userId);
         Task<ResultModel> GetById(Guid Id);
     }
@@ -18,11 +19,13 @@ namespace Services.Core
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly INotificationHub _notificationHub;
-        public NotificationService(AppDbContext dbContext, IMapper mapper, INotificationHub notificationHub)
+        private readonly IFireBaseNotificationService _fireBaseNotificationService;
+        public NotificationService(AppDbContext dbContext, IMapper mapper, INotificationHub notificationHub, IFireBaseNotificationService fireBaseNotificationService)
 		{
             _dbContext = dbContext;
             _mapper = mapper;
             _notificationHub = notificationHub;
+            _fireBaseNotificationService = fireBaseNotificationService;
 		}
 
         public async Task Add(Notification notification)
@@ -36,6 +39,30 @@ namespace Services.Core
             catch (Exception e)
             {
                 var r = e;
+            }
+        }
+
+        public async Task CreateReceipt(KafkaModel kafkaModel)
+        {
+            try
+            {
+                foreach (var item in kafkaModel.UserReceiveNotice)
+                {
+                   var notification = new Notification
+                    {
+                       Title = "New Receipt",
+                       Body = "There's a new receipt just created",
+                       Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
+                       UserId = item,
+                       TypeModel = "Receipt"
+                   };
+                    SendNotifyFcm(item, notification, notification.Title, notification.Body);
+                    await _dbContext.Notifications.InsertOneAsync(notification);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
             }
         }
 
@@ -78,6 +105,39 @@ namespace Services.Core
             return result;
         }
 
+        private async void SendNotifyFcm(Guid userReceiveId, Notification data, string title, string body)
+        {
+            try
+            {
+                var userReceive = _dbContext.Users.Find(_ => _.Id == userReceiveId && !_.IsDeleted).FirstOrDefault();
+                if (userReceive != null)
+                {
+                    userReceive.CurrenNoticeCount++;
+                    _dbContext.Users.ReplaceOne(_ => _.Id == userReceiveId, userReceive);
+                    if (userReceive != null && userReceive.FcmTokens.Count > 0)
+                    {
+                        var result = new NotificationFcmModel
+                        {
+                            Title = title,
+                            Body = body,
+                            Data = data,
+                            RegistrationIds = userReceive.FcmTokens,
+                            UserId = userReceiveId,
+                        };
+                        await _fireBaseNotificationService.SendNotification(result);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
     }
+
+
 }
 

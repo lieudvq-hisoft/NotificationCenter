@@ -76,7 +76,7 @@ namespace Services.Core
                     UserId = userResult.Id
                 };
                 await _notificationService.Add(notification);
-                SendNotifyFcm(userResult.Id, userResult, notification.Title, notification.Body);
+                SendNotifyFcm(userResult.Id, notification, notification.Title, notification.Body);
             }
             catch (Exception e)
             {
@@ -177,7 +177,7 @@ namespace Services.Core
             return result;
         }
 
-        private async void SendNotifyFcm(Guid userReceiveId, object data, string title, string body)
+        private async void SendNotifyFcm(Guid userReceiveId, Notification data, string title, string body)
         {
             try
             {

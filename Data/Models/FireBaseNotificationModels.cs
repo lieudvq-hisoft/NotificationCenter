@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.Entities;
 using Newtonsoft.Json;
 
 namespace Data.Models
@@ -9,7 +10,7 @@ namespace Data.Models
         public string DeviceId { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
-        public object Data { get; set; }
+        public Notification Data { get; set; }
         public List<string> RegistrationIds { get; set; }
     }
 

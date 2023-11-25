@@ -8,10 +8,12 @@ namespace Services.kafka
     {
         private ConsumerConfig _config;
         private readonly IUserService _userService;
-        public KafkaConsumer(ConsumerConfig config, IUserService userService)
+        private readonly INotificationService _notificationService;
+        public KafkaConsumer(ConsumerConfig config, IUserService userService, INotificationService notificationService)
         {
             _config = config;
             _userService = userService;
+            _notificationService = notificationService;
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -29,7 +31,7 @@ namespace Services.kafka
             };
             using (var c = new ConsumerBuilder<Ignore, string>(_config).Build())
             {
-                var topics = new List<string>() { "user-create-new", "user-update" };
+                var topics = new List<string>() { "user-create-new", "user-update", "receipt-create-new" };
                 c.Subscribe(topics);
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -44,6 +46,11 @@ namespace Services.kafka
                         case "user-update":
                             var userUpdate = Newtonsoft.Json.JsonConvert.DeserializeObject<UserFromKafka>(cr.Value);
                             _userService.UpdateFromKafka(userUpdate);
+                            break;
+                        case "receipt-create-new":
+                            var receiptModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
+                            _notificationService.CreateReceipt(receiptModel);
+                            //_userService.UpdateFromKafka(userUpdate);
                             break;
                         default:
                             break;
