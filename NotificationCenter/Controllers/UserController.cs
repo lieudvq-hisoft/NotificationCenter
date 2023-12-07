@@ -50,5 +50,13 @@ public class UserController : ControllerBase
         if (rs.Succeed) return Ok(rs.Data);
         return BadRequest(rs.ErrorMessage);
     }
+
+    [HttpPost("SeenCurrenNoticeCount")]
+    public async Task<ActionResult> SeenCurrenNoticeCount()
+    {
+        var result = await _userService.SeenCurrenNoticeCount(Guid.Parse(User.GetId()));
+        if (result.Succeed) return Ok(result.Data);
+        return BadRequest(result.ErrorMessage);
+    }
 }
 

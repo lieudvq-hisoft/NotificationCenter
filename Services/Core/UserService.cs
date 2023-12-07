@@ -15,6 +15,7 @@ namespace Services.Core
         Task<ResultModel> DeleteFcmToken(string fcmToken, Guid userId);
         Task<ResultModel> Profile(Guid userId);
         Task<ResultModel> Get();
+        Task<ResultModel> SeenCurrenNoticeCount(Guid userId);
     }
     public class UserService : IUserService
 	{
@@ -177,6 +178,30 @@ namespace Services.Core
             return result;
         }
 
+        public async Task<ResultModel> SeenCurrenNoticeCount(Guid userId)
+        {
+            var result = new ResultModel();
+            try
+            {
+                var user = _dbContext.Users.Find(_ => _.Id == userId && !_.IsDeleted).FirstOrDefault();
+                if (user == null)
+                {
+                    result.Succeed = false;
+                    result.ErrorMessage = "User not found";
+                    return result;
+                }
+                user.CurrenNoticeCount = 0;
+                _dbContext.Users.ReplaceOne(_ => _.Id == user.Id, user);
+                result.Data = user.Id;
+                result.Succeed = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+            return result;
+        }
+
         private async void SendNotifyFcm(Guid userReceiveId, Notification data, string title, string body)
         {
             try
@@ -207,6 +232,8 @@ namespace Services.Core
             }
 
         }
+
+
     }
 
 }
