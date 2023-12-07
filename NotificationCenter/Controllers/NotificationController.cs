@@ -41,5 +41,13 @@ public class NotificationController : ControllerBase
         if (rs.Succeed) return Ok(rs.Data);
         return BadRequest(rs.ErrorMessage);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteNotify(Guid id)
+    {
+        var rs = await _notificationService.DeleteNotify(id, Guid.Parse(User.GetId()));
+        if (rs.Succeed) return Ok(rs.Data);
+        return BadRequest(rs.ErrorMessage);
+    }
 }
 
