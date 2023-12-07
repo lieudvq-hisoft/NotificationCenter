@@ -13,6 +13,7 @@ namespace Services.Core
         Task CreateReceipt(KafkaModel model);
         Task<ResultModel> Get(Guid userId);
         Task<ResultModel> GetById(Guid Id);
+        Task<ResultModel> SeenNotify(Guid id, Guid userID);
     }
     public class NotificationService : INotificationService
     {
@@ -97,6 +98,30 @@ namespace Services.Core
                 //viewData.Data = dataDeserial;
                 result.Succeed = true;
                 result.Data = viewData;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+            return result;
+        }
+
+        public async Task<ResultModel> SeenNotify(Guid id, Guid userId)
+        {
+            var result = new ResultModel();
+            try
+            {
+                var notification = _dbContext.Notifications.Find(_ => _.Id == id && _.UserId == userId && !_.IsDeleted).FirstOrDefault();
+                if (notification == null)
+                {
+                    result.Succeed = false;
+                    result.ErrorMessage = "Notification not found";
+                    return result;
+                }
+                notification.Seen = true;
+                _dbContext.Notifications.ReplaceOne(_ => _.Id == notification.Id, notification);
+                result.Data = notification.Id;
+                result.Succeed = true;
             }
             catch (Exception e)
             {

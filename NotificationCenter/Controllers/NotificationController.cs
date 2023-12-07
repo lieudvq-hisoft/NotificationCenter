@@ -33,5 +33,13 @@ public class NotificationController : ControllerBase
         if (rs.Succeed) return Ok(rs.Data);
         return BadRequest(rs.ErrorMessage);
     }
+
+    [HttpPut("SeenNotify/{id}")]
+    public async Task<IActionResult> SeenNotify(Guid id)
+    {
+        var rs = await _notificationService.SeenNotify(id, Guid.Parse(User.GetId()));
+        if (rs.Succeed) return Ok(rs.Data);
+        return BadRequest(rs.ErrorMessage);
+    }
 }
 
