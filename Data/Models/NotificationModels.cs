@@ -10,6 +10,8 @@ namespace Data.Models
         public string? Body { get; set; }
         public object? Data { get; set; }
         public string? TypeModel { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateUpdated { get; set; }
     }
 }
 
