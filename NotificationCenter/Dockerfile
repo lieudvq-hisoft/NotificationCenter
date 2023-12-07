@@ -5,6 +5,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ENV ASPNETCORE_ENVIRONMENT=Development TZ=Asia/Ho_Chi_Minh
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["NotificationCenter/NotificationCenter.csproj", "NotificationCenter/"]
