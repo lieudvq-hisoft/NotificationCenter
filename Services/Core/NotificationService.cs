@@ -11,6 +11,7 @@ namespace Services.Core
     {
         Task Add(Notification model);
         Task CreateReceipt(KafkaModel model);
+        Task InventoryThresholdWarning(KafkaModel model);
         Task<ResultModel> Get(Guid userId);
         Task<ResultModel> GetById(Guid Id);
         Task<ResultModel> SeenNotify(Guid id, Guid userId);
@@ -58,6 +59,32 @@ namespace Services.Core
                        UserId = item,
                        TypeModel = "Receipt"
                    };
+                    SendNotifyFcm(item, notification, notification.Title, notification.Body);
+                    await _dbContext.Notifications.InsertOneAsync(notification);
+                }
+            }
+            catch (Exception e)
+            {
+                var message = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+        }
+
+        public async Task InventoryThresholdWarning(KafkaModel kafkaModel)
+        {
+            try
+            {
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload);
+                var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductModel>(json);
+                foreach (var item in kafkaModel.UserReceiveNotice)
+                {
+                    var notification = new Notification
+                    {
+                        Title = "Low Inventory Threshold Warning",
+                        Body = product!.SerialNumber + ": " + product!.Name,
+                        Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
+                        UserId = item,
+                        TypeModel = "Product"
+                    };
                     SendNotifyFcm(item, notification, notification.Title, notification.Body);
                     await _dbContext.Notifications.InsertOneAsync(notification);
                 }
