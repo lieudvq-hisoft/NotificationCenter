@@ -3243,11 +3243,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/NotificationCenter.csproj",
+      "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/NotificationCenter/NotificationCenter.csproj",
       "projectName": "NotificationCenter",
-      "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/NotificationCenter.csproj",
+      "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/NotificationCenter/NotificationCenter.csproj",
       "packagesPath": "/Users/dangvoquanglieu/.nuget/packages/",
-      "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/NotificationCenter/obj/",
+      "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/NotificationCenter/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/dangvoquanglieu/.nuget/NuGet/NuGet.Config"
@@ -3264,11 +3264,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj": {
-              "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj"
+            "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj": {
+              "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj"
             },
-            "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj": {
-              "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj"
+            "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj": {
+              "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj"
             }
           }
         }

@@ -61,6 +61,7 @@ namespace Services.Core
                    };
                     SendNotifyFcm(item, notification, notification.Title, notification.Body);
                     await _dbContext.Notifications.InsertOneAsync(notification);
+                    await _notificationHub.NewNotification(_mapper.Map<Notification, NotificationModel>(notification), notification.UserId.ToString());
                 }
             }
             catch (Exception e)
@@ -87,6 +88,7 @@ namespace Services.Core
                     };
                     SendNotifyFcm(item, notification, notification.Title, notification.Body);
                     await _dbContext.Notifications.InsertOneAsync(notification);
+                    await _notificationHub.NewNotification(_mapper.Map<Notification, NotificationModel>(notification), notification.UserId.ToString());
                 }
             }
             catch (Exception e)

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj": {}
+    "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj": {}
   },
   "projects": {
-    "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj": {
+    "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj",
+        "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj",
         "projectName": "Data",
-        "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj",
+        "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj",
         "packagesPath": "/Users/dangvoquanglieu/.nuget/packages/",
-        "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/obj/",
+        "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/dangvoquanglieu/.nuget/NuGet/NuGet.Config"
@@ -80,14 +80,14 @@
         }
       }
     },
-    "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj": {
+    "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj",
+        "projectUniqueName": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj",
         "projectName": "Services",
-        "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj",
+        "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj",
         "packagesPath": "/Users/dangvoquanglieu/.nuget/packages/",
-        "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/obj/",
+        "outputPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/dangvoquanglieu/.nuget/NuGet/NuGet.Config"
@@ -104,8 +104,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj": {
-                "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj"
+              "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj": {
+                "projectPath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj"
               }
             }
           }

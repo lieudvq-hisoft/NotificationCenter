@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3nqW7KROrVHh88Hr96WvDXunlbee9cwpO8yvilhXhoVbzGPfHLFDvQWI6L/Gjc0CvKaF8/0wFhtxvUip1NDRUw==",
+  "dgSpecHash": "0YbGfpXnUBvQTjmBNbeKyhBLOgJ1YDOTfg/9DGBHwEdSDxZfnuKTKRhBdTABXEibTehdqi8BJWrCcTbOCmVyHg==",
   "success": true,
-  "projectFilePath": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Data/Data.csproj",
+  "projectFilePath": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Data/Data.csproj",
   "expectedPackageFiles": [
     "/Users/dangvoquanglieu/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/Users/dangvoquanglieu/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "QeBEv4DUwIpKYQX88MzThb8fYg4xmz4RTM8GHJBZ8y0=",
+  "Hash": "QBELArC1ChUrNRlN6o3spYL4zFq9mL455dBw0t2pjFE=",
   "Source": "NotificationCenter",
   "BasePath": "_content/NotificationCenter",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "/Users/dangvoquanglieu/Documents/Capstone Support/WmsTeam/NotificationCenter/Services/Services.csproj",
+      "Identity": "/Users/dangvoquanglieu/Documents/Capstone Support/NotificationCenter/Services/Services.csproj",
       "Version": 2,
       "Source": "Services",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
