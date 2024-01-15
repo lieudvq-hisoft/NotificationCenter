@@ -191,6 +191,7 @@ namespace Services.Core
                 if (userReceive != null)
                 {
                     userReceive.CurrenNoticeCount++;
+                    await _notificationHub.NewNotificationCount(userReceive.CurrenNoticeCount, userReceive.Id.ToString());
                     _dbContext.Users.ReplaceOne(_ => _.Id == userReceiveId, userReceive);
                     if (userReceive != null && userReceive.FcmTokens.Count > 0)
                     {
