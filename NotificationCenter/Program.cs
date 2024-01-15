@@ -21,7 +21,7 @@ builder.Services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials()
-        .WithOrigins("http://localhost:3000", "https://wms.hisoft.vn"
+        .WithOrigins("http://localhost:3000", "https://wms.hisoft.vn", "https://warehouse.solocode.click"
         );
 }));
 builder.Services.AddSignalR();
