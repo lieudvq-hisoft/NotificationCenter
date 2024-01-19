@@ -135,7 +135,7 @@ namespace Services.Core
                         Body = "Order completed",
                         Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
                         UserId = item,
-                        TypeModel = "PickingRequest"
+                        TypeModel = "Order"
                     };
                     SendNotifyFcm(item, notification, notification.Title, notification.Body);
                     await _dbContext.Notifications.InsertOneAsync(notification);
