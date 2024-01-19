@@ -4,6 +4,7 @@ using Data.Entities;
 using Data.Models;
 using MongoDB.Driver;
 using Services.SignalR;
+using static Confluent.Kafka.ConfigPropertyNames;
 
 namespace Services.Core
 {
@@ -15,6 +16,7 @@ namespace Services.Core
         Task PickingRequestAssignUser(KafkaModel model);
         Task PickingRequestComplete(KafkaModel model);
         Task OrderComplete(KafkaModel model);
+        Task ProductUpdate(KafkaModel model);
         Task<ResultModel> Get(Guid userId);
         Task<ResultModel> GetById(Guid Id);
         Task<ResultModel> SeenNotify(Guid id, Guid userId);
@@ -133,6 +135,33 @@ namespace Services.Core
                     {
                         Title = "Complete",
                         Body = "Order completed",
+                        Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
+                        UserId = item,
+                        TypeModel = "Order"
+                    };
+                    SendNotifyFcm(item, notification, notification.Title, notification.Body);
+                    await _dbContext.Notifications.InsertOneAsync(notification);
+                    await _notificationHub.NewNotification(_mapper.Map<Notification, NotificationModel>(notification), notification.UserId.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                var message = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+        }
+
+        public async Task ProductUpdate(KafkaModel kafkaModel)
+        {
+            try
+            {
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload);
+                var product = Newtonsoft.Json.JsonConvert.DeserializeObject<ProductModel>(json);
+                foreach (var item in kafkaModel.UserReceiveNotice)
+                {
+                    var notification = new Notification
+                    {
+                        Title = "Product updated",
+                        Body = product!.SerialNumber + ": " + product!.Name,
                         Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
                         UserId = item,
                         TypeModel = "Order"

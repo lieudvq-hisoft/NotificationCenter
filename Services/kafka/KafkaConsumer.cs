@@ -35,7 +35,8 @@ namespace Services.kafka
                     "inventory-threshold-warning",
                     "pickingrequest-assign-user",
                     "pickingrequest-complete",
-                    "order-complete"
+                    "order-complete",
+                    "product-update"
                 };
                 c.Subscribe(topics);
                 while (!stoppingToken.IsCancellationRequested)
@@ -71,6 +72,10 @@ namespace Services.kafka
                         case "order-complete":
                             var orderCompleteModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
                             _notificationService.OrderComplete(orderCompleteModel);
+                            break;
+                        case "product-update":
+                            var productUpdate = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
+                            _notificationService.ProductUpdate(productUpdate);
                             break;
                         default:
                             break;
