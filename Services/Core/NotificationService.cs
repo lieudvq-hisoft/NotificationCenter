@@ -14,6 +14,7 @@ namespace Services.Core
         Task InventoryThresholdWarning(KafkaModel model);
         Task PickingRequestAssignUser(KafkaModel model);
         Task PickingRequestComplete(KafkaModel model);
+        Task OrderComplete(KafkaModel model);
         Task<ResultModel> Get(Guid userId);
         Task<ResultModel> GetById(Guid Id);
         Task<ResultModel> SeenNotify(Guid id, Guid userId);
@@ -107,6 +108,31 @@ namespace Services.Core
                     {
                         Title = "Complete",
                         Body = "Picking request completed",
+                        Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
+                        UserId = item,
+                        TypeModel = "PickingRequest"
+                    };
+                    SendNotifyFcm(item, notification, notification.Title, notification.Body);
+                    await _dbContext.Notifications.InsertOneAsync(notification);
+                    await _notificationHub.NewNotification(_mapper.Map<Notification, NotificationModel>(notification), notification.UserId.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                var message = e.Message + "\n" + (e.InnerException != null ? e.InnerException.Message : "") + "\n ***Trace*** \n" + e.StackTrace;
+            }
+        }
+
+        public async Task OrderComplete(KafkaModel kafkaModel)
+        {
+            try
+            {
+                foreach (var item in kafkaModel.UserReceiveNotice)
+                {
+                    var notification = new Notification
+                    {
+                        Title = "Complete",
+                        Body = "Order completed",
                         Data = Newtonsoft.Json.JsonConvert.SerializeObject(kafkaModel.Payload),
                         UserId = item,
                         TypeModel = "PickingRequest"
