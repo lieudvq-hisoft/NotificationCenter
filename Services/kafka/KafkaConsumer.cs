@@ -31,7 +31,11 @@ namespace Services.kafka
             };
             using (var c = new ConsumerBuilder<Ignore, string>(_config).Build())
             {
-                var topics = new List<string>() { "user-create-new", "user-update", "receipt-create-new", "inventory-threshold-warning", "pickingrequest-assign-user" };
+                var topics = new List<string>() { "user-create-new", "user-update", "receipt-create-new",
+                    "inventory-threshold-warning",
+                    "pickingrequest-assign-user",
+                    "pickingrequest-complete"
+                };
                 c.Subscribe(topics);
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -58,6 +62,10 @@ namespace Services.kafka
                         case "pickingrequest-assign-user":
                             var pickingRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
                             _notificationService.PickingRequestAssignUser(pickingRequestModel);
+                            break;
+                        case "pickingrequest-complete":
+                            var pickingRequestCompleteModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
+                            _notificationService.PickingRequestComplete(pickingRequestCompleteModel);
                             break;
                         default:
                             break;
