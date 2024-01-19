@@ -31,7 +31,7 @@ namespace Services.kafka
             };
             using (var c = new ConsumerBuilder<Ignore, string>(_config).Build())
             {
-                var topics = new List<string>() { "user-create-new", "user-update", "receipt-create-new", "inventory-threshold-warning" };
+                var topics = new List<string>() { "user-create-new", "user-update", "receipt-create-new", "inventory-threshold-warning", "pickingrequest-assign-user" };
                 c.Subscribe(topics);
                 while (!stoppingToken.IsCancellationRequested)
                 {
@@ -54,6 +54,10 @@ namespace Services.kafka
                         case "inventory-threshold-warning":
                             var productModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
                             _notificationService.InventoryThresholdWarning(productModel);
+                            break;
+                        case "pickingrequest-assign-user":
+                            var pickingRequestModel = Newtonsoft.Json.JsonConvert.DeserializeObject<KafkaModel>(cr.Value);
+                            _notificationService.PickingRequestAssignUser(pickingRequestModel);
                             break;
                         default:
                             break;
